@@ -1,0 +1,37 @@
+@use "~@angular/material" as mat;
+/* For use in src/lib/core/theming/_palette.scss */
+/* For use in src/lib/core/theming/_palette.scss */
+$map: (
+  50: #eae8f8,
+  100: #cac6ed,
+  200: #a7a0e1,
+  300: #847ad4,
+  400: #695ecb,
+  500: #4f41c2,
+  600: #483bbc,
+  700: #3f32b4,
+  800: #362aac,
+  900: #261c9f,
+  A100: #d9d7ff,
+  A200: #aaa4ff,
+  A400: #7a71ff,
+  A700: #6258ff,
+  contrast: (
+    50: #11142b,
+    100: #11142b,
+    200: #11142b,
+    300: #11142b,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #11142b,
+    A200: #11142b,
+    A400: #11142b,
+    A700: #ffffff,
+  ),
+);
+
+$palette: mat.define-palette($map, $default: 500, $lighter: 100, $darker: 700);

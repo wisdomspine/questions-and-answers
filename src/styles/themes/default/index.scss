@@ -1,0 +1,12 @@
+@use "~@angular/material" as mat;
+@use "./palettes/accent.scss" ;
+@use  "./palettes/primary.scss";
+@use "./palettes/warn.scss";
+@forward "./styles/style.scss";
+
+
+$theme: mat.define-light-theme((color: (
+    primary: primary.$palette,
+    accent: accent.$palette,
+    warn: warn.$palette,
+)))

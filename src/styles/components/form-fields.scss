@@ -1,0 +1,26 @@
+@mixin formField {
+    .app-round-input-field.app-block{
+        display: block;
+    }
+    .app-round-input-field[appearance=outline]{
+        
+        .mat-form-field-outline-start{
+            min-width: 100% !important;
+            border-radius: 100px !important;
+        }
+
+        .mat-form-field-outline-end{
+            min-width: 100% !important;
+            border-radius: 100px !important;
+            left: 0;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+        }
+
+        &.mat-focused .mat-form-field-label, & .mat-form-field-label:not(.mat-empty.mat-form-field-empty){
+            transform: translateY(-1em) scale(0.75);
+        }
+    }
+}

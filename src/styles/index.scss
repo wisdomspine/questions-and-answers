@@ -1,0 +1,36 @@
+@use "~@angular/material" as mat;
+@use "./themes/default/index.scss" as default;
+@use "./mixins.scss";
+@use "./typography/typography.scss";
+@use "./components/index.scss" as components;
+
+@include mat.core(typography.$typography);
+@include mat.core-theme(default.$theme);
+@include mat.progress-bar-theme(default.$theme);
+@include mat.form-field-theme(default.$theme);
+@include mat.button-theme(default.$theme);
+@include mat.icon-theme(default.$theme);
+@include mat.tooltip-theme(default.$theme);
+@include mat.toolbar-theme(default.$theme);
+@include mat.sidenav-theme(default.$theme);
+@include mat.menu-theme(default.$theme);
+@include mat.divider-theme(default.$theme);
+@include mat.list-theme(default.$theme);
+@include mat.input-theme(default.$theme);
+@include mat.select-theme(default.$theme);
+@include mat.datepicker-theme(default.$theme);
+@include mat.dialog-theme(default.$theme);
+@include mat.slide-toggle-theme(default.$theme);
+@include mat.checkbox-theme(default.$theme);
+@include mat.dialog-theme(default.$theme);
+@include mat.progress-spinner-theme(default.$theme);
+body {
+  @include default.styles(default.$theme);
+}
+@include components.components();
+
+@include mixins.container();
+@include mixins.grids();
+// @include mixins.customElevation();
+@include mixins.appExtras();
+@include typography.textStyles();

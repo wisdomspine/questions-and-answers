@@ -1,0 +1,53 @@
+@use "~@angular/material" as mat;
+$typography: mat.define-typography-config(
+  $font-family: "Raleway, sans-serif",
+);
+@mixin textStyles() {
+  .app-text-italic {
+    font-style: italic;
+  }
+
+  // constant text colors
+  .app-active-text-color {
+    color: #2dd63e;
+    &-important {
+      color: #2dd63e !important;
+    }
+  }
+
+  .app-inactive-text-color {
+    color: #ff3131;
+    &-important {
+      color: #ff3131 !important;
+    }
+  }
+
+  .app-pending-text-color {
+    color: #f7931a;
+    &-important {
+      color: #f7931a !important;
+    }
+  }
+
+  // constant background
+  .app-active-background-color {
+    background-color: #2dd63e;
+    &-important {
+      background-color: #2dd63e !important;
+    }
+  }
+
+  .app-inactive-background-color {
+    background-color: #ff3131;
+    &-important {
+      background-color: #ff3131 !important;
+    }
+  }
+
+  .app-pending-background-color {
+    background-color: #f7931a;
+    &-important {
+      background-color: #f7931a !important;
+    }
+  }
+}

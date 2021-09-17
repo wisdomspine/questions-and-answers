@@ -1,0 +1,638 @@
+@use "~@angular/material" as mat;
+@use "./constants.scss";
+$prefixes: (webkit, moz, os);
+$palettes: (primary, warn, accent);
+$hues: (50, 100, 200, 300, 400, 500, 600, 700, 800, 900);
+$maxGrids: 12;
+$sides: (left, top, right, bottom);
+$maxMarginAndPadding: 112;
+$alignments: (center, left, right, justify);
+$maxElevation: 24;
+
+@mixin prefixStyleStatement($property, $value) {
+  @each $prefix in $prefixes {
+    -#{$prefix}-#{$property}: $value;
+  }
+  #{$property}: $value;
+}
+
+@mixin scrollbar(
+  $trackColor: null,
+  $thumbColor: null,
+  $thumbShadowColor: null,
+  $trackBackgroundColor: null
+) {
+  &::-webkit-scrollbar {
+    width: 0.8em;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px $trackColor;
+    padding: 0px 4px;
+    background-color: $trackBackgroundColor;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumbColor;
+    border-radius: 10px;
+    @include mat.elevation(
+      $zValue: 5,
+      $color: $thumbShadowColor,
+      $opacity: 0.8
+    );
+  }
+}
+
+@mixin scrollbars($color-config: ()) {
+  @each $key in $palettes {
+    @if map-has-key($map: $color-config, $key: $key) {
+      $palette: map-get(
+        $map: $color-config,
+        $key: $key,
+      );
+      .app-scrollbar-#{$key} {
+        @include scrollbar(
+          $trackColor: mat.get-color-from-palette($palette, 500),
+          $trackBackgroundColor: mat.get-color-from-palette($palette, 50),
+          $thumbColor: mat.get-color-from-palette($palette, 600),
+          $thumbShadowColor: mat.get-contrast-color-from-palette($palette, 500)
+        );
+      }
+    }
+  }
+}
+
+@mixin background($color-config: ()) {
+  @each $key in $palettes {
+    @if map-has-key($map: $color-config, $key: $key) {
+      $palette: map-get(
+        $map: $color-config,
+        $key: $key,
+      );
+      @each $hue in $hues {
+        .app-contrast-background-color-#{$key}-#{$hue} {
+          background-color: mat.get-contrast-color-from-palette($palette, $hue);
+          &-important {
+            background-color: mat.get-contrast-color-from-palette(
+              $palette,
+              $hue
+            ) !important;
+          }
+        }
+        @for $i from 0 through 100 {
+          .app-background-color-#{$key}-#{$hue}-#{$i} {
+            background-color: mat.get-color-from-palette(
+              $palette,
+              $hue,
+              $i/100
+            );
+
+            &-important {
+              background-color: mat.get-color-from-palette(
+                $palette,
+                $hue,
+                $i/100
+              ) !important;
+            }
+          }
+
+          .app-contrast-background-color-#{$key}-#{$hue}-#{$i} {
+            background-color: rgba(
+              $color: mat.get-contrast-color-from-palette($palette, $hue),
+              $alpha: $i/100
+            );
+
+            &-important {
+              background-color: rgba(
+                $color: mat.get-contrast-color-from-palette($palette, $hue),
+                $alpha: $i/100
+              ) !important;
+            }
+          }
+        }
+        .app-background-color-#{$key}-#{$hue} {
+          background-color: mat.get-color-from-palette($palette, $hue);
+          &-important {
+            background-color: mat.get-color-from-palette(
+              $palette,
+              $hue
+            ) !important;
+          }
+        }
+      }
+      .app-background-color-#{$key} {
+        &:not(.mat-form-field),
+        .mat-form-field-flex {
+          background-color: mat.get-color-from-palette($palette);
+        }
+        &-important {
+          &:not(.mat-form-field),
+          .mat-form-field-flex {
+            background-color: mat.get-color-from-palette($palette) !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin borderColor($color-config: ()) {
+  @each $key in $palettes {
+    @if map-has-key($map: $color-config, $key: $key) {
+      $palette: map-get(
+        $map: $color-config,
+        $key: $key,
+      );
+      @each $hue in $hues {
+        .app-contrast-border-color-#{$key}-#{$hue} {
+          border-color: mat.get-contrast-color-from-palette($palette, $hue);
+          &-important {
+            border-color: mat.get-contrast-color-from-palette(
+              $palette,
+              $hue
+            ) !important;
+          }
+        }
+        @for $i from 0 through 100 {
+          .app-border-color-#{$key}-#{$hue}-#{$i} {
+            border-color: mat.get-color-from-palette($palette, $hue, $i/100);
+
+            &-important {
+              border-color: mat.get-color-from-palette(
+                $palette,
+                $hue,
+                $i/100
+              ) !important;
+            }
+          }
+
+          .app-contrast-border-color-#{$key}-#{$hue}-#{$i} {
+            border-color: rgba(
+              $color: mat.get-contrast-color-from-palette($palette, $hue),
+              $alpha: $i/100
+            );
+
+            &-important {
+              border-color: rgba(
+                $color: mat.get-contrast-color-from-palette($palette, $hue),
+                $alpha: $i/100
+              ) !important;
+            }
+          }
+        }
+
+        .app-border-color-#{$key}-#{$hue} {
+          border-color: mat.get-color-from-palette($palette, $hue);
+          &-important {
+            border-color: mat.get-color-from-palette($palette, $hue) !important;
+          }
+        }
+      }
+
+      .app-border-color-#{$key} {
+        border-color: mat.get-color-from-palette($palette);
+        &-important {
+          border-color: mat.get-color-from-palette($palette) !important;
+        }
+      }
+    }
+  }
+}
+
+@mixin container {
+  .app-container {
+    max-width: constants.$max-container-width;
+  }
+
+  @for $grid from 1 through $maxGrids {
+    .app-container-#{$grid} {
+      max-width: ($grid / $maxGrids) * 1300px;
+    }
+  }
+}
+
+@mixin grids {
+  @for $grid from 1 through $maxGrids {
+    .app-grid-#{$grid} {
+      width: ($grid / $maxGrids) * 100%;
+    }
+  }
+}
+
+@mixin customElevation($color-config: ()) {
+  @for $elevation from 0 through $maxElevation {
+    @for $op from 0 through 100 {
+      .app-elevation-z#{$elevation}-#{$op} {
+        @include mat.elevation($elevation, $opacity: $op/100);
+      }
+
+      .mat-form-field.app-elevation-z#{$elevation}-#{$op} {
+        box-shadow: none;
+        .mat-form-field-flex {
+          @include mat.elevation($elevation, $opacity: $op/100);
+        }
+      }
+    }
+  }
+
+  @each $key in $palettes {
+    @if map-has-key($map: $color-config, $key: $key) {
+      $palette: map-get(
+        $map: $color-config,
+        $key: $key,
+      );
+      @for $elevation from 0 through $maxElevation {
+        @for $op from 0 through 100 {
+          .app-elevation-z#{$elevation}-#{$op}-#{$key} {
+            @include mat.elevation(
+              $elevation,
+              mat.get-color-from-palette($palette, 500),
+              $opacity: $op/100
+            );
+          }
+        }
+      }
+    }
+  }
+
+  .app-elevation-transition {
+    @include mat.elevation-transition();
+  }
+}
+
+@mixin links($color-config: ()) {
+  a {
+    &:visited,
+    &:hover,
+    &:focus,
+    & {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+
+  @each $key in $palettes {
+    @if map-has-key($map: $color-config, $key: $key) {
+      $palette: map-get(
+        $map: $color-config,
+        $key: $key,
+      );
+      a.app-link-#{$key} {
+        &,
+        &:visited {
+          color: mat.get-color-from-palette($palette, 500);
+        }
+        &:hover {
+          color: mat.get-color-from-palette($palette, 300);
+        }
+      }
+    }
+  }
+}
+
+@mixin textColor($color-config: ()) {
+  @each $key in $palettes {
+    @if map-has-key($map: $color-config, $key: $key) {
+      $palette: map-get(
+        $map: $color-config,
+        $key: $key,
+      );
+
+      @each $hue in $hues {
+        .app-text-color-#{$key}-#{$hue} {
+          color: mat.get-color-from-palette($palette, $hue);
+        }
+        .app-contrast-text-color-#{$key}-#{$hue} {
+          color: mat.get-contrast-color-from-palette($palette, $hue);
+        }
+
+        @for $op from 0 through 100 {
+          .app-text-color-#{$key}-#{$hue}-#{$op} {
+            color: mat.get-color-from-palette($palette, $hue, $op/100);
+          }
+          .app-contrast-text-color-#{$key}-#{$hue}-#{$op} {
+            color: rgba(
+              $color: mat.get-contrast-color-from-palette($palette, $hue),
+              $alpha: $op/100
+            );
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin customSnackbar($color-config: ()) {
+  @each $key in $palettes {
+    $palette: map-get(
+      $map: $color-config,
+      $key: $key,
+    );
+    .mat-snack-bar-container.#{$key} {
+      background-color: mat.get-color-from-palette($palette);
+      color: mat.get-contrast-color-from-palette($palette, 500);
+    }
+  }
+}
+
+@mixin customNavLinks($color-config: ()) {
+  @each $key in $palettes {
+    $palette: map-get(
+      $map: $color-config,
+      $key: $key,
+    );
+
+    mat-nav-list.app-#{$key} .mat-list-item,
+    mat-nav-list a.app-#{$key} {
+      transition: all 0.3s ease-in-out;
+      &:hover,
+      &:focus {
+        background-color: rgba(
+          $color: mat.get-contrast-color-from-palette($palette, 400),
+          $alpha: 0.175
+        );
+      }
+
+      &.app-active-link {
+        color: mat.get-contrast-color-from-palette($palette, normal);
+        background-color: rgba(
+          $color: mat.get-contrast-color-from-palette($palette, 400),
+          $alpha: 0.175
+        );
+        border-color: rgba(
+          $color: mat.get-contrast-color-from-palette($palette, 400),
+          $alpha: 1
+        );
+      }
+    }
+  }
+}
+
+@mixin appFormFields($color-config: ()) {
+  // check box
+  .mat-checkbox {
+    &.app-block-checkbox {
+      label {
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        .mat-checkbox-inner-container {
+          margin-left: 0px;
+          margin-right: 0px;
+          margin: 0px;
+        }
+      }
+    }
+  }
+
+  @each $key in $palettes {
+    $palette: map-get(
+      $map: $color-config,
+      $key: $key,
+    );
+    .mat-form-field.app-form-field.mat-form-field-appearance-fill[color="#{$key}"] {
+      &.mat-focused {
+        &:not(.mat-form-field-invalid) {
+          .mat-form-field-flex {
+            border: 2px solid mat.get-color-from-palette($palette);
+          }
+        }
+      }
+    }
+  }
+
+  .mat-form-field.app-form-field.mat-form-field-appearance-fill {
+    // mat-select
+    mat-select {
+      .mat-select-trigger {
+        display: flex;
+        align-items: center;
+        flex-flow: row nowrap;
+        .mat-select-value {
+          max-width: none;
+        }
+      }
+    }
+
+    &.mat-form-field-invalid {
+      .mat-form-field-flex {
+        border: 2px solid
+          mat.get-color-from-palette(map-get($map: $color-config, $key: warn));
+      }
+    }
+    .mat-form-field-flex {
+      border-radius: 4px;
+      transition: background 0.2s ease-out;
+      transition: border 0.12s ease-in-out;
+    }
+
+    &.mat-form-field-invalid {
+      .mat-form-field-ripple {
+        background-color: transparent;
+      }
+    }
+
+    .mat-form-field-underline {
+      display: none;
+      &::before {
+        background-color: transparent;
+      }
+    }
+
+    &.mat-focused {
+      .mat-form-field-flex {
+        background: inherit;
+        @include mat.elevation($zValue: 4, $opacity: 0.2);
+      }
+    }
+
+    &:not(.app-disabled) {
+      &:not(.mat-focused) {
+        .mat-form-field-flex {
+          &:hover {
+            border: 2px solid
+              mat.get-contrast-color-from-palette(
+                map-get($map: $color-config, $key: primary),
+                500
+              );
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin appExtras() {
+  .app-cursor-pointer {
+    cursor: pointer;
+  }
+}
+
+@mixin tables($color-config: ()) {
+  .mat-table {
+    th,
+    td,
+    mat-header-cell,
+    mat-cell {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    td,
+    mat-cell {
+      padding-bottom: 8px;
+      padding-top: 8px;
+    }
+    &:not(.app-table-row-border) {
+      .mat-row,
+      .mat-cell,
+      .mat-header-cell {
+        border-bottom: 0px solid transparent;
+        border-top: 0px solid transparent;
+      }
+    }
+
+    &.app-table-row-border {
+      $primary-palette: map-get(
+        $map: $color-config,
+        $key: primary,
+      );
+      .mat-row,
+      .mat-cell,
+      .mat-header-cell,
+      .mat-header-row,
+      .mat-footer-row {
+        border-color: rgba(
+          $color: mat.get-contrast-color-from-palette($primary-palette, 500),
+          $alpha: 0.15
+        );
+      }
+    }
+
+    // override fontsize
+    mat-header-cell,
+    mat-footer-cell,
+    .mat-header-cell,
+    .mat-footer-cell {
+      font-size: 18px;
+    }
+
+    @each $key in $palettes {
+      @if map-has-key($map: $color-config, $key: $key) {
+        $palette: map-get(
+          $map: $color-config,
+          $key: $key,
+        );
+        &.app-table-stripped.#{$key} {
+          // thead,
+          // tfoot {
+          //   background-color: mat.get-color-from-palette($palette, 100);
+          // }
+
+          tbody {
+            tr {
+              &:nth-child(even) {
+                background-color: mat.get-color-from-palette($palette, 50);
+              }
+              &:nth-child(odd) {
+                background-color: mat.get-contrast-color-from-palette(
+                  $palette,
+                  900
+                );
+              }
+            }
+          }
+          mat-row {
+            &:nth-child(even) {
+              background-color: mat.get-color-from-palette($palette, 50);
+            }
+            &:nth-child(odd) {
+              background-color: mat.get-contrast-color-from-palette(
+                $palette,
+                900
+              );
+            }
+          }
+          &.app-table-hover {
+            cursor: pointer;
+            tbody {
+              tr {
+                transition: background 0.3s ease-in;
+                &:hover {
+                  background-color: mat.get-color-from-palette($palette, 100);
+                }
+              }
+            }
+            mat-row {
+              transition: background 0.3s ease-in;
+              &:hover {
+                background-color: mat.get-color-from-palette($palette, 100);
+              }
+            }
+          }
+
+          & {
+            // thead,
+            // tfoot {
+            //   th,
+            //   td {
+            //     &.mat-table-sticky {
+            //       background-color: mat.get-color-from-palette($palette, 100);
+            //     }
+            //   }
+            // }
+            tbody {
+              tr {
+                td {
+                  &.mat-table-sticky {
+                    background-color: inherit;
+                  }
+                }
+                // &:nth-child(odd) {
+                //   td {
+                //     &.mat-table-sticky {
+                //       background-color: mat.get-contrast-color-from-palette(
+                //         $palette,
+                //         900
+                //       );
+                //     }
+                //   }
+
+                // }
+              }
+            }
+
+            mat-row {
+              mat-cell {
+                &.mat-table-sticky {
+                  background-color: inherit;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  // color
+}
+
+@mixin dialog($color-config: ()) {
+  $accent-palette: map-get(
+    $map: $color-config,
+    $key: accent,
+  );
+
+  .cdk-overlay-container {
+    .cdk-overlay-backdrop {
+      background-color: mat.get-color-from-palette($accent-palette, 900, 0.3);
+    }
+    .cdk-overlay-pane {
+      .mat-dialog-container {
+        border-radius: 10px;
+        box-shadow: none;
+      }
+    }
+  }
+}

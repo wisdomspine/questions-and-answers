@@ -1,0 +1,14 @@
+@mixin navigation {
+  .app-navigation-loading-dialog {
+    .mat-dialog-container {
+      padding: 0px !important;
+    }
+  }
+
+  // pop up navigation
+  .popup-navigation-menu {
+    .mat-dialog-container {
+      border-radius: 0px !important;
+    }
+  }
+}

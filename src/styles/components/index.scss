@@ -1,0 +1,6 @@
+@use "./form-fields.scss" as formFields;
+@use "./navigation.scss" as navigation;
+@mixin components {
+  @include formFields.formField();
+  @include navigation.navigation();
+}

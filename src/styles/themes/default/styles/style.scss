@@ -1,0 +1,40 @@
+@use "~@angular/material" as mat;
+@use "../../../mixins.scss" as mixins;
+@mixin styles($theme) {
+  $color-config: mat.get-color-config($theme);
+  $primary: map-get(
+    $map: $color-config,
+    $key: "primary",
+  );
+  $accent: map-get(
+    $map: $color-config,
+    $key: "accent",
+  );
+  $warn: map-get(
+    $map: $color-config,
+    $key: "warn",
+  );
+  background-color: mat.get-color-from-palette($accent, 50);
+
+  &,
+  * {
+    @include mixins.scrollbar(
+      $trackColor: mat.get-color-from-palette($accent, 200),
+      $thumbColor: mat.get-color-from-palette($accent, 500),
+      $thumbShadowColor: mat.get-contrast-color-from-palette($primary, 500)
+    );
+  }
+
+  @include mixins.background($color-config: $color-config);
+  @include mixins.borderColor($color-config: $color-config);
+  @include mixins.links($color-config: $color-config);
+  @include mixins.textColor($color-config: $color-config);
+  @include mixins.customSnackbar($color-config: $color-config);
+  // @include mixins.topToBottomGradient($color-config: $color-config);
+  @include mixins.customNavLinks($color-config: $color-config);
+  @include mixins.appFormFields($color-config: $color-config);
+  @include mixins.customElevation($color-config: $color-config);
+  @include mixins.scrollbars($color-config: $color-config);
+  @include mixins.tables($color-config: $color-config);
+  @include mixins.dialog($color-config: $color-config);
+}
