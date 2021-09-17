@@ -1,0 +1,9 @@
+<div>
+  <label
+    for="{{ labelId }}"
+    class="{{ labelClass }} app-margin-bottom--16-important app-font-size-16"
+    ><ng-content select="app-label"></ng-content>
+    <span *ngIf="required" class="app-text-color-warn-500">*</span>
+  </label>
+  <ng-content></ng-content>
+</div>

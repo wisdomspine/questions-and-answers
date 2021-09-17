@@ -1,0 +1,10 @@
+<div
+  [class]="'avatar app-elevation-z0-16 app-background-color-' + color"
+  [style.borderRadius.px]="radius"
+  [style.height.px]="radius * 2"
+  [style.width.px]="radius * 2"
+  [class]="frameClass ?? ''"
+  [style.overflow]="'hidden'"
+>
+  <ng-content></ng-content>
+</div>

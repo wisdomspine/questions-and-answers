@@ -1,0 +1,42 @@
+<button
+  mat-flat-button
+  class="
+    app-padding-left-24-important
+    app-padding-right-32-important
+    app-padding-top-8-important
+    app-padding-bottom-8-important
+    app-border-radius-8-important
+    app-background-color-accent-200-important
+  "
+  color="accent"
+  [matMenuTriggerFor]="duration"
+>
+  <span
+    ><mat-icon
+      fontIcon="app-caret_down"
+      color="accent"
+      [style.font-size.px]="14"
+    >
+    </mat-icon
+  ></span>
+</button>
+<mat-menu
+  #duration
+  class="
+    app-elevation-z0-24
+    app-border
+    app-border-1
+    app-border-radius-8-important
+    app-contrast-border-color-primary-500-20
+  "
+  panelClass="duration-menu"
+>
+  <button
+    mat-menu-item
+    *ngFor="let interval of intervals"
+    (click)="intervalChange.emit(interval)"
+  >
+    <span class="mat-h3"> {{ intervalText(interval) }} </span
+    >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </button>
+</mat-menu>

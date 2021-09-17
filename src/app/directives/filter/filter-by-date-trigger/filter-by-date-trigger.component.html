@@ -1,0 +1,76 @@
+<div class="container">
+  <button
+    mat-stroked-button
+    class="
+      app-padding-left-24-important
+      app-padding-right-24-important
+      app-padding-top-8-important
+      app-padding-bottom-8-important
+      app-border-radius-8-important
+      app-contrast-border-color-primary-500-40-important
+    "
+    [style.width]="'100%'"
+    (click)="$event.stopPropagation(); showDate = !showDate"
+  >
+    <span class="app-font-size-16">
+      Filter by Date &nbsp;&nbsp;&nbsp;&nbsp;
+      <mat-icon fontIcon="app-funnel"> </mat-icon>
+    </span>
+  </button>
+
+  <button
+    *ngIf="showDate"
+    mat-stroked-button
+    class="
+      app-padding-left-24-important
+      app-padding-right-24-important
+      app-padding-top-8-important
+      app-padding-bottom-8-important
+      app-border-radius-8-important
+      app-contrast-border-color-primary-500-40-important
+      app-background-color-primary-500
+      date-button
+    "
+    (click)="$event.stopImmediatePropagation(); datePicker.open()"
+    @dateAnimation
+  >
+    <div class="date mat-h3 app-margin-bottom-0-important">
+      <div>
+        <span class="app-contrast-text-color-primary-500-60">From</span>
+        <span class="app-font-weight-600">
+          {{ range.start | date: "d LLL, yyyy" }}
+        </span>
+      </div>
+      <div class="app-margin-left-56-important">
+        <span class="app-contrast-text-color-primary-500-60">To</span>
+        <span class="app-font-weight-600"
+          >{{ range.end | date: "d LLL, yyyy" }}
+        </span>
+      </div>
+    </div>
+  </button>
+</div>
+
+<!-- date picker -->
+<mat-date-range-input
+  [rangePicker]="datePicker"
+  [style.width.px]="1"
+  [style.height.px]="1"
+>
+  <input
+    type="date"
+    matStartDate
+    [formControl]="_startControl"
+    [min]="minDate"
+    [max]="maxDate"
+  />
+  <input type="date" matEndDate [formControl]="_endControl" />
+</mat-date-range-input>
+<mat-date-range-picker
+  #datePicker
+  color="accent"
+  [startAt]="range?.start"
+  [panelClass]="_pickerClass"
+  (closed)="emitEvent()"
+>
+</mat-date-range-picker>

@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  flex-flow: column;
+}
+.container {
+  display: flex;
+  flex-flow: row nowrap;
+  position: relative;
+  min-height: 74px;
+  align-items: center;
+  .date-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 10;
+    .date {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      > div {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+      }
+    }
+  }
+}

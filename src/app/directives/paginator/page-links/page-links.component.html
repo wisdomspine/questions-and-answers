@@ -1,0 +1,130 @@
+<mat-action-list>
+  <!-- prev page button -->
+  <button
+    [color]="color ?? controller?.color ?? 'accent'"
+    type="button"
+    mat-stroked-button
+    *ngIf="showPrev"
+    matTooltip="Go to previous"
+    class="
+      app-padding-top-3-important
+      app-padding-bottom-3-important
+      app-padding-left-8-important
+      app-padding-right-8-important
+      app-border-radius-50-important
+    "
+    (click)="controller?.previousPage()"
+    [disabled]="!controller.hasPreviousPage()"
+    [class.app-background-color-accent-50-important]="
+      controller.hasPreviousPage()
+    "
+    [class.app-contrast-background-color-primary-500-4-important]="
+      !controller.hasPreviousPage()
+    "
+  >
+    <mat-icon fontSet="material-icons">west</mat-icon>
+  </button>
+
+  <!-- prev ellipsis -->
+  <ng-container *ngIf="canShowStartEllipsis">
+    <button
+      type="button"
+      mat-stroked-button
+      class="
+        app-padding-top-3-important
+        app-padding-bottom-3-important
+        app-padding-left-8-important
+        app-padding-right-8-important
+        app-border-radius-50-important
+        app-contrast-background-color-primary-500-4-important
+      "
+      [disabled]="true"
+    >
+      <mat-icon fontSet="material-icons">more_horiz</mat-icon>
+    </button>
+  </ng-container>
+  <!-- links -->
+  <ng-container *ngFor="let page of links; trackBy: trackPageLinks">
+    <!-- selected -->
+    <button
+      [color]="color ?? controller?.color ?? 'accent'"
+      type="button"
+      *ngIf="page === selected"
+      mat-flat-button
+      class="
+        app-padding-top-3-important
+        app-padding-bottom-3-important
+        app-padding-left-8-important
+        app-padding-right-8-important
+        app-border-radius-50-important
+      "
+    >
+      <span class="mat-h2">
+        {{ page + 1 }}
+      </span>
+    </button>
+    <!-- not selected -->
+    <button
+      color="accent"
+      type="button"
+      *ngIf="page !== selected"
+      mat-stroked-button
+      class="
+        app-padding-top-3-important
+        app-padding-bottom-3-important
+        app-padding-left-8-important
+        app-padding-right-8-important
+        app-border-radius-50-important
+        app-background-color-accent-50-important
+      "
+      (click)="jumpTo(page)"
+    >
+      <span class="mat-h2">
+        {{ page + 1 }}
+      </span>
+    </button>
+  </ng-container>
+
+  <!-- next ellipsis -->
+  <ng-container *ngIf="canShowEndEllipsis">
+    <button
+      type="button"
+      mat-stroked-button
+      class="
+        app-padding-top-3-important
+        app-padding-bottom-3-important
+        app-padding-left-8-important
+        app-padding-right-8-important
+        app-border-radius-50-important
+        app-contrast-background-color-primary-500-4-important
+      "
+      [disabled]="true"
+    >
+      <mat-icon fontSet="material-icons">more_horiz</mat-icon>
+    </button>
+  </ng-container>
+
+  <!-- next page button -->
+  <button
+    [color]="color ?? controller?.color ?? 'accent'"
+    type="button"
+    mat-stroked-button
+    *ngIf="showNext"
+    matTooltip="Go to next"
+    class="
+      app-padding-top-3-important
+      app-padding-bottom-3-important
+      app-padding-left-8-important
+      app-padding-right-8-important
+      app-border-radius-50-important
+    "
+    (click)="controller?.nextPage()"
+    [disabled]="!controller.hasNextPage()"
+    [class.app-background-color-accent-50-important]="controller.hasNextPage()"
+    [class.app-contrast-background-color-primary-500-4-important]="
+      !controller.hasNextPage()
+    "
+  >
+    <mat-icon fontSet="material-icons">east</mat-icon>
+  </button>
+</mat-action-list>

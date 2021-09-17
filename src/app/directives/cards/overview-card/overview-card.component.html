@@ -1,0 +1,22 @@
+<mat-card
+  [class]="backgroundColorClass"
+  class="app-elevation-z12-8 app-border-radius-12-important app-cursor-pointer"
+  [style.background-color]="backgroundColor ?? 'none'"
+>
+  <mat-card-content>
+    <div class="header">
+      <div>
+        <ng-content select="app-overview-card-title"></ng-content>
+      </div>
+      <div>
+        <ng-content select="app-overview-card-actions"></ng-content>
+      </div>
+    </div>
+    <div>
+      <ng-content select="app-overview-card-body"></ng-content>
+    </div>
+    <div>
+      <ng-content select="app-overview-card-footer"></ng-content>
+    </div>
+  </mat-card-content>
+</mat-card>

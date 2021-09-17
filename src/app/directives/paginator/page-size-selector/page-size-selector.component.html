@@ -1,0 +1,22 @@
+<div class="container">
+  <p class="app-padding-right-16 app-font-size-18-important">{{ label }}:</p>
+  <mat-form-field
+    [appearance]="appearance ?? 'outline'"
+    [color]="color ?? controller?.color ?? 'accent'"
+    [style.width.px]="128"
+    class="
+      app-padding-top-10-important
+      app-padding-bottom-16-important
+      app-font-size-16-important
+    "
+  >
+    <mat-select
+      (valueChange)="selectionChange($event)"
+      [value]="controller?.pageSize"
+    >
+      <mat-option *ngFor="let size of pageSizeOptions" [value]="size">
+        {{ size }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

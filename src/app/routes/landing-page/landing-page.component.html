@@ -1,0 +1,79 @@
+<div fxLayoutAlign="center">
+  <div
+    class="app-container"
+    fxLayout="column nowrap"
+    fxLayoutAlign="space-between center"
+    [style.min-height]="'100vh'"
+    ngStyle.gt-sm="padding:52px 20px"
+    ngStyle.lt-md="padding:20px"
+    [style.width.%]="100"
+  >
+    <!-- section -->
+    <div
+      fxLayout="row nowrap"
+      fxLayoutAlign="space-between start"
+      [style.width.%]="100"
+      fxLayout.lt-md="column"
+      fxLayoutAlign.lt-md="center center"
+    >
+      <div ngStyle.lt-md="text-align:center">
+        <h1 [style.fontSize.em]="2.5" [style.marginBottom.px]="24">
+          Questions and Answers
+        </h1>
+        <p [style.fontSize.px]="18" [style.lineHeight]="1.6">
+          Generate an unlimited number of questions and<br />
+          answers sheets without going online, or fear of <br />
+          third party access from your browser
+        </p>
+      </div>
+      <button
+        mat-flat-button
+        color="accent"
+        [style.borderRadius.px]="60"
+        [style.padding]="'6px 40px'"
+        ngStyle.lt-md="margin-top:64px"
+        [routerLink]="[kEndPoints.recentSheetsUrl]"
+      >
+        <span>Generate Questions</span>
+      </button>
+    </div>
+
+    <!-- section -->
+    <div
+      ngStyle.gt-sm="margin-top:160px"
+      [style.marginBottom]="'120px'"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      ngStyle.lt-md="margin-top:120px"
+    >
+      <h2
+        [style.textAlign]="'center'"
+        [style.marginBottom]="'80px'"
+        [style.fontSize.em]="1.8"
+      >
+        in 3 Easy steps
+      </h2>
+      <img
+        src="assets/chart.svg"
+        alt=""
+        ngStyle.gt-sm="max-width: 60%"
+        ngStyle.lt-md="max-width: 70%"
+        ngStyle.lt-sm="max-width: 90%"
+      />
+    </div>
+
+    <!-- section -->
+    <div>
+      <button
+        mat-raised-button
+        color="accent"
+        [style.borderRadius.px]="60"
+        [style.padding]="'6px 60px'"
+        class="app-elevation-z12-50-accent"
+        [routerLink]="[kEndPoints.recentSheetsUrl]"
+      >
+        <span>Get Started</span>
+      </button>
+    </div>
+  </div>
+</div>

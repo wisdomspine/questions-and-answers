@@ -1,0 +1,9 @@
+<span class="mat-h2 breadcrumb">
+  <span [class.mat-h3]="!!child" [class.has-child]="!!child"
+    ><ng-content></ng-content
+  ></span>
+  <span *ngIf="!!child" class="mat-h1 app-padding-left-4 app-padding-right-4"
+    >/</span
+  >
+  <span><ng-content select="app-breadcrumb"></ng-content></span>
+</span>

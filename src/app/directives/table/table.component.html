@@ -1,0 +1,38 @@
+<div
+  class="
+    container
+    app-background-color-primary
+    app-border-radius-8-important
+    app-elevation-z8-8
+  "
+>
+  <!-- table head -->
+  <div
+    class="header app-padding-16 app-padding-top-32"
+    [fxLayout.lt-md]="'column'"
+    [fxLayoutAlign]="'center center'"
+    [ngClass.lt-md]="'lt-md-fix'"
+    [fxLayout]="'row nowrap'"
+    [fxLayoutAlign]="'space-between center'"
+  >
+    <ng-content select="app-page-size-selector"></ng-content>
+    <ng-content select="form"></ng-content>
+  </div>
+
+  <!-- table content -->
+  <div class="content" [style.overflow-x]="'auto'">
+    <ng-content select="mat-table,[mat-table]"></ng-content>
+  </div>
+
+  <div
+    class="footer app-padding-16 app-padding-top-32"
+    [fxLayout.lt-md]="'column'"
+    [fxLayoutAlign]="'center center'"
+    [fxLayout]="'row nowrap'"
+    [fxLayoutAlign]="'space-between center'"
+    [fxLayoutGap.lt-md]="'20px'"
+  >
+    <ng-content select="app-paginator-range"></ng-content>
+    <ng-content select="app-page-links"></ng-content>
+  </div>
+</div>

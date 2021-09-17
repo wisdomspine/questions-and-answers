@@ -1,0 +1,22 @@
+mat-card {
+  height: 100%;
+  transition: box-shadow 0.3s;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  &:hover {
+    box-shadow: none;
+  }
+  mat-card-content {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    justify-content: space-between;
+    height: 100%;
+    > .header {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
