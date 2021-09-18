@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @use "~@angular/material" as mat;
 @use "./constants.scss";
 $prefixes: (webkit, moz, os);
@@ -84,14 +86,14 @@ $maxElevation: 24;
             background-color: mat.get-color-from-palette(
               $palette,
               $hue,
-              $i/100
+              $i * 0.01
             );
 
             &-important {
               background-color: mat.get-color-from-palette(
                 $palette,
                 $hue,
-                $i/100
+                $i * 0.01
               ) !important;
             }
           }
@@ -99,13 +101,13 @@ $maxElevation: 24;
           .app-contrast-background-color-#{$key}-#{$hue}-#{$i} {
             background-color: rgba(
               $color: mat.get-contrast-color-from-palette($palette, $hue),
-              $alpha: $i/100
+              $alpha: $i * 0.01
             );
 
             &-important {
               background-color: rgba(
                 $color: mat.get-contrast-color-from-palette($palette, $hue),
-                $alpha: $i/100
+                $alpha: $i * 0.01
               ) !important;
             }
           }
@@ -155,13 +157,13 @@ $maxElevation: 24;
         }
         @for $i from 0 through 100 {
           .app-border-color-#{$key}-#{$hue}-#{$i} {
-            border-color: mat.get-color-from-palette($palette, $hue, $i/100);
+            border-color: mat.get-color-from-palette($palette, $hue, $i * 0.01);
 
             &-important {
               border-color: mat.get-color-from-palette(
                 $palette,
                 $hue,
-                $i/100
+                $i * 0.01
               ) !important;
             }
           }
@@ -169,13 +171,13 @@ $maxElevation: 24;
           .app-contrast-border-color-#{$key}-#{$hue}-#{$i} {
             border-color: rgba(
               $color: mat.get-contrast-color-from-palette($palette, $hue),
-              $alpha: $i/100
+              $alpha: $i * 0.01
             );
 
             &-important {
               border-color: rgba(
                 $color: mat.get-contrast-color-from-palette($palette, $hue),
-                $alpha: $i/100
+                $alpha: $i * 0.01
               ) !important;
             }
           }
@@ -206,7 +208,7 @@ $maxElevation: 24;
 
   @for $grid from 1 through $maxGrids {
     .app-container-#{$grid} {
-      max-width: ($grid / $maxGrids) * 1300px;
+      max-width: math.div($grid, $maxGrids) * 1300px;
     }
   }
 }
@@ -214,7 +216,7 @@ $maxElevation: 24;
 @mixin grids {
   @for $grid from 1 through $maxGrids {
     .app-grid-#{$grid} {
-      width: ($grid / $maxGrids) * 100%;
+      width: math.div($grid, $maxGrids) * 100%;
     }
   }
 }
@@ -223,13 +225,13 @@ $maxElevation: 24;
   @for $elevation from 0 through $maxElevation {
     @for $op from 0 through 100 {
       .app-elevation-z#{$elevation}-#{$op} {
-        @include mat.elevation($elevation, $opacity: $op/100);
+        @include mat.elevation($elevation, $opacity: $op * 0.01);
       }
 
       .mat-form-field.app-elevation-z#{$elevation}-#{$op} {
         box-shadow: none;
         .mat-form-field-flex {
-          @include mat.elevation($elevation, $opacity: $op/100);
+          @include mat.elevation($elevation, $opacity: $op * 0.01);
         }
       }
     }
@@ -247,7 +249,7 @@ $maxElevation: 24;
             @include mat.elevation(
               $elevation,
               mat.get-color-from-palette($palette, 500),
-              $opacity: $op/100
+              $opacity: $op * 0.01
             );
           }
         }
@@ -301,19 +303,28 @@ $maxElevation: 24;
       @each $hue in $hues {
         .app-text-color-#{$key}-#{$hue} {
           color: mat.get-color-from-palette($palette, $hue);
+          &-important {
+            color: mat.get-color-from-palette($palette, $hue) !important;
+          }
         }
         .app-contrast-text-color-#{$key}-#{$hue} {
           color: mat.get-contrast-color-from-palette($palette, $hue);
+          &-important {
+            color: mat.get-contrast-color-from-palette(
+              $palette,
+              $hue
+            ) !important;
+          }
         }
 
         @for $op from 0 through 100 {
           .app-text-color-#{$key}-#{$hue}-#{$op} {
-            color: mat.get-color-from-palette($palette, $hue, $op/100);
+            color: mat.get-color-from-palette($palette, $hue, $op * 0.01);
           }
           .app-contrast-text-color-#{$key}-#{$hue}-#{$op} {
             color: rgba(
               $color: mat.get-contrast-color-from-palette($palette, $hue),
-              $alpha: $op/100
+              $alpha: $op * 0.01
             );
           }
         }
@@ -345,8 +356,8 @@ $maxElevation: 24;
     mat-nav-list.app-#{$key} .mat-list-item,
     mat-nav-list a.app-#{$key} {
       transition: all 0.3s ease-in-out;
-      &:hover,
-      &:focus {
+      &.app-transition:hover,
+      &.app-transition:focus {
         background-color: rgba(
           $color: mat.get-contrast-color-from-palette($palette, 400),
           $alpha: 0.175
@@ -354,15 +365,15 @@ $maxElevation: 24;
       }
 
       &.app-active-link {
-        color: mat.get-contrast-color-from-palette($palette, normal);
-        background-color: rgba(
-          $color: mat.get-contrast-color-from-palette($palette, 400),
-          $alpha: 0.175
-        );
-        border-color: rgba(
-          $color: mat.get-contrast-color-from-palette($palette, 400),
-          $alpha: 1
-        );
+        color: mat.get-contrast-color-from-palette($palette, 500);
+        // background-color: rgba(
+        //   $color: mat.get-contrast-color-from-palette($palette, 400),
+        //   $alpha: 0.175
+        // );
+        // border-color: rgba(
+        //   $color: mat.get-contrast-color-from-palette($palette, 400),
+        //   $alpha: 1
+        // );
       }
     }
   }
@@ -632,6 +643,19 @@ $maxElevation: 24;
       .mat-dialog-container {
         border-radius: 10px;
         box-shadow: none;
+      }
+    }
+  }
+}
+
+@mixin fontWeights() {
+  @for $index from 0 through 9 {
+    $weight: $index * 100;
+    .app-font-weight-#{$weight} {
+      font-weight: $weight;
+
+      &-important {
+        font-weight: $weight !important;
       }
     }
   }

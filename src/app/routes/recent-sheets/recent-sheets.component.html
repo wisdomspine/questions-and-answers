@@ -1,1 +1,104 @@
-<p>recent-sheets works!</p>
+<div
+  style="padding: 16px"
+  fxLayout="column nowrap"
+  fxLayoutAlign="start stretch"
+  class="container"
+  #container
+>
+  <div
+    class="header app-background-color-primary"
+    fxLayout="row nowrap"
+    fxLayoutAlign="space-between center"
+    @scroll
+    [style]="{
+      left: container.getBoundingClientRect().left - 12 + 'px',
+      right: '0px',
+      padding: '8px 30px',
+      'margin-top': '-16px'
+    }"
+    *ngIf="!scrollDown"
+  >
+    <h1 style="font-weight: bold">Recent</h1>
+    <mat-form-field
+      class="app-round-input-field app-block"
+      appearance="outline"
+      color="accent"
+      style="width: 320px"
+    >
+      <input
+        type="search"
+        matInput
+        placeholder="Search  Sheets,  Questions, Answers, ..."
+        [formControl]="searchControl"
+      />
+      <button mat-icon-button matSuffix>
+        <mat-icon class="app-contrast-text-color-primary-500-30"
+          >search</mat-icon
+        >
+      </button>
+    </mat-form-field>
+  </div>
+  <div
+    fxLayout="column nowrap"
+    fxLayoutAlign="start stretch"
+    fxLayoutGap="24px"
+    style="margin-top: 100px"
+  >
+    <mat-card
+      *ngFor="let sheet of sheets"
+      class="app-background-color-primary app-elevation-z4-10"
+    >
+      <mat-card-title
+        fxLayout="row nowrap"
+        fxLayoutAlign="space-between flex-start "
+      >
+        <h3 style="font-weight: 500">{{ sheet.title }}</h3>
+        <p
+          class="app-text-color-accent-600"
+          style="font-size: 14px; margin: 0px"
+        >
+          {{
+            (questionsService.queryQuestionsChanges(sheet.id) | async)
+              ?.length ?? 0
+          }}
+          Question(s)
+        </p>
+      </mat-card-title>
+      <mat-card-actions>
+        <button mat-button color="warn" (click)="deleteSheet(sheet.id)">
+          <span style="font-size: 12px">Delete</span>
+        </button>
+        <button mat-button [routerLink]="kEndpoints.generateSheetUrl(sheet.id)">
+          <span style="font-size: 12px">Edit</span>
+        </button>
+        <button
+          mat-button
+          type="button"
+          (click)="questionsService.downloadSheet(sheet.id)"
+        >
+          <span style="font-size: 12px">Download</span>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div
+    *ngIf="sheets.length <= 0"
+    fxLayout="column nowrap"
+    fxLayoutAlign="center center"
+    style="min-height: calc(100vh - 180px)"
+  >
+    <h4>No Question sheet found</h4>
+    <button
+      mat-raised-button
+      color="accent"
+      style="padding: 4px 30px; border-radius: 50px"
+      class="app-elevation-z4-20"
+      matTooltip="Create new questions and answers"
+      (click)="createSheet()"
+    >
+      <span>Create New</span>
+    </button>
+  </div>
+</div>
+
+<!-- (click)="createSheet()" -->

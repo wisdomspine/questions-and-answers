@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DatabaseResolver } from './resolver/database.resolver';
 import { Endpoints } from './routes/endpoints';
 import { LandingPageComponent } from './routes/landing-page/landing-page.component';
 import { LayoutComponent } from './routes/layout/layout.component';
@@ -14,6 +15,9 @@ const routes: Routes = [
   {
     path: Endpoints.recentSheets,
     component: LayoutComponent,
+    resolve: {
+      db: DatabaseResolver,
+    },
     children: [
       {
         path: '',

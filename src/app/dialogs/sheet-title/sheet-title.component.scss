@@ -1,0 +1,18 @@
+mat-card {
+  .content {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    form {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: stretch;
+      .logo {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+  }
+}

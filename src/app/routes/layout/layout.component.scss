@@ -1,0 +1,39 @@
+$sidenav-width: 200px;
+:host {
+  width: 100%;
+  display: block;
+  mat-sidenav-container {
+    min-height: 100vh;
+    mat-sidenav-content {
+      min-height: 100vh;
+    }
+  }
+  .lg-nav {
+    min-height: 100vh;
+    height: 100vh;
+    max-height: 100vh;
+    top: 0;
+    position: fixed;
+    overflow-y: auto;
+    z-index: 10;
+    width: $sidenav-width;
+  }
+
+  .content {
+    &:not(.sm-screen) {
+      width: calc(100vw - #{$sidenav-width + 12px + 20px});
+      margin-left: $sidenav-width + 12px;
+    }
+
+    &.sm-screen {
+      margin-top: 56px;
+    }
+  }
+
+  mat-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+}

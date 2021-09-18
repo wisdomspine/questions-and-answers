@@ -20,10 +20,10 @@ export class Endpoints {
   }
 
   static get sheet(): string {
-    return ':questionId';
+    return ':sheetId';
   }
 
-  static generateSheetUrl(questionId: string): string {
-    return `${this.recentSheetsUrl}/${questionId}`;
+  static generateSheetUrl(sheetId: string | number): string {
+    return `${this.recentSheetsUrl}/${sheetId}`;
   }
 }

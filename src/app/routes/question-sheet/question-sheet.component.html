@@ -1,1 +1,308 @@
-<p>question-sheet works!</p>
+<div
+  style="padding: 16px"
+  fxLayout="column nowrap"
+  fxLayoutAlign="start stretch"
+  class="container"
+  #container
+>
+  <div
+    class="header app-background-color-primary"
+    fxLayout="row nowrap"
+    fxLayoutAlign="space-between flex-start"
+    @scroll
+    [style]="{
+      left: container.getBoundingClientRect().left - 12 + 'px',
+      right: '0px',
+      padding: '8px 30px',
+      'margin-top': '-16px'
+    }"
+    *ngIf="!scrollDown"
+  >
+    <div
+      fxLayout="row nowrap"
+      fxLayoutGap="24px"
+      fxLayout.lt-md="column nowrap"
+      fxLayoutAlign.lt-md="start start "
+    >
+      <h1 style="font-weight: bold">{{ sheet?.title ?? "" | titlecase }}</h1>
+
+      <div>
+        <button mat-button (click)="editSheetTitle()">
+          <span
+            fxLayout="row nowrap"
+            fxLayoutGap="8px"
+            fxLayoutAlign="start center"
+          >
+            <mat-icon style="font-size: 18px"> edit </mat-icon>
+            <span style="font-size: 12px" class="app-text-color-accent-600"
+              >Change</span
+            >
+          </span>
+        </button>
+        <button
+          mat-button
+          type="button"
+          (click)="questionsService.downloadSheet(sheetId)"
+        >
+          <span
+            fxLayout="row nowrap"
+            fxLayoutGap="8px"
+            fxLayoutAlign="start center"
+          >
+            <mat-icon style="font-size: 18px"> cloud_download </mat-icon>
+            <span style="font-size: 12px" class="app-text-color-accent-600"
+              >Download</span
+            >
+          </span>
+        </button>
+        <button mat-button color="warn" (click)="deleteSheet()">
+          <span
+            fxLayout="row nowrap"
+            fxLayoutGap="8px"
+            fxLayoutAlign="start center"
+          >
+            <mat-icon style="font-size: 18px"> delete_forever </mat-icon>
+            <span style="font-size: 12px" class="app-text-color-warn-600"
+              >Delete</span
+            >
+          </span>
+        </button>
+      </div>
+    </div>
+    <p class="app-text-color-accent-600" style="font-size: 14px; margin: 0px">
+      {{
+        (questionsService.queryQuestionsChanges(sheet?.id ?? -1) | async)
+          ?.length ?? 0
+      }}
+      Question(s)
+    </p>
+  </div>
+  <div
+    fxLayout="column nowrap"
+    fxLayoutAlign="start stretch"
+    fxLayoutGap="24px"
+    style="margin-top: 100px"
+  >
+    <ng-container *ngFor="let question of questions; let i = index">
+      <mat-card
+        class="app-background-color-primary app-elevation-z4-10"
+        *ngIf="
+          !form.existingQuestion || form.existingQuestion.id != question.id
+        "
+      >
+        <!-- card header -->
+        <div
+          fxLayout="row nowrap"
+          fxLayoutAlign="space-between center"
+          fxLayoutGap="24px"
+        >
+          <p class="app-text-color-accent-500" style="margin: 0px">
+            Question {{ i + 1 }}
+          </p>
+          <div>
+            <button
+              mat-button
+              type="button"
+              (click)="setEditingQuestion(question)"
+            >
+              <span style="font-size: 12px">Edit</span>
+            </button>
+            <button
+              mat-button
+              color="warn"
+              (click)="deleteQuestion(question.id)"
+            >
+              <span style="font-size: 12px">Delete</span>
+            </button>
+
+            <button mat-icon-button>
+              <mat-icon class="" style="font-size: 16px"
+                >drag_indicator</mat-icon
+              >
+            </button>
+          </div>
+        </div>
+        <mat-card-content>
+          <h3 style="font-weight: 500">
+            {{ question.question ?? "" | titlecase }}
+          </h3>
+          <p
+            class="app-text-color-accent-500"
+            style="margin: 0px; margin-top: 20px"
+          >
+            Answer
+          </p>
+          <p>
+            {{ question.answer ?? "" | titlecase }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- currently edited -->
+      <form
+        [formGroup]="form"
+        (ngSubmit)="form?.valid && updateQuestion(question)"
+        *ngIf="form.existingQuestion?.id == question.id"
+      >
+        <mat-card class="app-background-color-primary app-elevation-z4-10">
+          <!-- card header -->
+
+          <div
+            fxLayout="row nowrap"
+            fxLayoutAlign="space-between center"
+            fxLayoutGap="24px"
+          >
+            <p class="app-text-color-accent-500" style="margin: 0px">
+              Question {{ i + 1 }}
+            </p>
+            <div>
+              <button mat-button (click)="form.reset()" type="reset">
+                <span style="font-size: 12px" class="app-text-color-accent-600"
+                  >Reset</span
+                >
+              </button>
+              <button mat-button type="submit">
+                <span style="font-size: 12px" class="app-text-color-accent-600"
+                  >Save</span
+                >
+              </button>
+
+              <button mat-icon-button type="button">
+                <mat-icon class="" style="font-size: 16px"
+                  >drag_indicator</mat-icon
+                >
+              </button>
+            </div>
+          </div>
+          <mat-card-content>
+            <mat-form-field
+              appearance="outline"
+              color="accent"
+              style="width: 100%"
+            >
+              <input
+                type="text"
+                placeholder="Type Question here ...."
+                matInput
+                formControlName="question"
+                autofocus
+                required
+              />
+
+              <mat-error
+                *ngIf="
+                  form.question.hasError('required') ||
+                  form.question.hasError('notEmpty')
+                "
+              >
+                Question is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <p
+              class="app-text-color-accent-500"
+              style="margin: 0px; margin-top: 20px"
+            >
+              Answer
+            </p>
+            <mat-form-field
+              appearance="outline"
+              color="accent"
+              style="width: 100%"
+            >
+              <textarea
+                rows="1"
+                placeholder="Type Answer here ...."
+                matInput
+                formControlName="answer"
+              ></textarea>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </ng-container>
+
+    <!-- create question -->
+    <form
+      [formGroup]="form"
+      (ngSubmit)="form?.valid && createQuestion()"
+      *ngIf="!form.existingQuestion"
+    >
+      <mat-card class="app-background-color-primary app-elevation-z4-10">
+        <!-- card header -->
+
+        <div
+          fxLayout="row nowrap"
+          fxLayoutAlign="space-between center"
+          fxLayoutGap="24px"
+        >
+          <p class="app-text-color-accent-500" style="margin: 0px">
+            Question {{ questions.length + 1 }}
+          </p>
+          <div>
+            <button mat-button (click)="form.reset()" type="reset">
+              <span style="font-size: 12px" class="app-text-color-accent-600"
+                >Reset</span
+              >
+            </button>
+            <button mat-button type="submit">
+              <span style="font-size: 12px" class="app-text-color-accent-600"
+                >Save</span
+              >
+            </button>
+
+            <button mat-icon-button type="button">
+              <mat-icon class="" style="font-size: 16px"
+                >drag_indicator</mat-icon
+              >
+            </button>
+          </div>
+        </div>
+        <mat-card-content>
+          <mat-form-field
+            appearance="outline"
+            color="accent"
+            style="width: 100%"
+          >
+            <input
+              type="text"
+              placeholder="Type Question here ...."
+              matInput
+              formControlName="question"
+              autofocus
+              required
+            />
+
+            <mat-error
+              *ngIf="
+                form.question.hasError('required') ||
+                form.question.hasError('notEmpty')
+              "
+            >
+              Question is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <p
+            class="app-text-color-accent-500"
+            style="margin: 0px; margin-top: 20px"
+          >
+            Answer
+          </p>
+          <mat-form-field
+            appearance="outline"
+            color="accent"
+            style="width: 100%"
+          >
+            <textarea
+              rows="1"
+              placeholder="Type Answer here ...."
+              matInput
+              formControlName="answer"
+            ></textarea>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </div>
+</div>

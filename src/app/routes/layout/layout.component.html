@@ -1,1 +1,118 @@
-<p>layout works!</p>
+<mat-sidenav-container>
+  <mat-sidenav
+    class="
+      app-elevation-z4-20
+      app-background-color-primary
+      app-border-right-0-important
+    "
+    mode="over"
+    [fixedInViewport]="true"
+    @sidenav
+    [autoFocus]="false"
+    #mobileSideNav
+    style="min-width: 180px"
+  >
+    <div
+      class="nav-content"
+      [style.minHeight.vh]="97"
+      fxLayout="column nowrap"
+      fxLayoutAlign="space-between stretch"
+    >
+      <mat-nav-list style="margin-top: 24px">
+        <a
+          *ngFor="let link of navLinks"
+          mat-list-item
+          routerLinkActive="app-text-color-accent-500-important app-font-weight-600"
+          [routerLink]="[link?.link?.href]"
+          [matTooltip]="link?.link?.tooltip ?? ''"
+          [routerLinkActiveOptions]="{ exact: link?.exact ?? true }"
+          (click)="sidenav?.close()"
+        >
+          <span [style.fontSize.px]="18">
+            {{ link?.link?.text }}
+          </span>
+        </a>
+      </mat-nav-list>
+      <div style="margin: 40px 0px; padding: 24px">
+        <button
+          mat-raised-button
+          color="accent"
+          style="padding: 4px 30px; border-radius: 50px"
+          fxFlex="100"
+          class="app-elevation-z4-20"
+          matTooltip="Create new questions and answers"
+          (click)="createSheet(); sidenav?.close()"
+        >
+          <span>New</span>
+        </button>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!-- sidenav -->
+
+    <div
+      class="lg-nav app-background-color-primary-500 app-elevation-z4-10"
+      fxLayout="column nowrap"
+      fxLayoutAlign="space-between stretch"
+      [fxHide.lt-md]="true"
+      [ngClass.lt-md]="{ 'sm-screen': true }"
+    >
+      <mat-nav-list style="margin-top: 24px">
+        <a
+          *ngFor="let link of navLinks"
+          mat-list-item
+          routerLinkActive="app-text-color-accent-500-important app-font-weight-600"
+          [routerLink]="[link?.link?.href]"
+          [matTooltip]="link?.link?.tooltip ?? ''"
+          [routerLinkActiveOptions]="{ exact: link?.exact ?? true }"
+        >
+          <span [style.fontSize.px]="18">
+            {{ link?.link?.text }}
+          </span>
+        </a>
+      </mat-nav-list>
+      <div style="margin: 40px 0px; padding: 24px">
+        <button
+          mat-raised-button
+          color="accent"
+          style="padding: 4px 30px; border-radius: 50px"
+          fxFlex="100"
+          class="app-elevation-z4-20"
+          matTooltip="Create new questions and answers"
+          (click)="createSheet()"
+        >
+          <span>New</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- content area -->
+    <div class="content" [ngClass.lt-md]="{ 'sm-screen': true }">
+      <router-outlet></router-outlet>
+    </div>
+
+    <mat-toolbar
+      color="primary"
+      fxLayoutAlign="space-between center"
+      fxHide.gt-sm
+    >
+      <button
+        mat-icon-button
+        matTooltip="Open Navigation menu"
+        (click)="mobileSideNav.open()"
+      >
+        <mat-icon class="app-font-size-24-important"> menu </mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="Sign out of your account"
+        [routerLink]="[kEndpoints.landingPageUrl]"
+      >
+        <mat-icon class="app-font-size-24-important">home</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <!-- mobile menu -->
+  </mat-sidenav-content>
+</mat-sidenav-container>

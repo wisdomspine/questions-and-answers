@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { MediaObserver } from '@angular/flex-layout';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { AppMediaService } from './app-media.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +8,7 @@ import { AppMediaService } from './app-media.service';
 export class SnackbarService {
   constructor(
     private snackbar: MatSnackBar,
-    private mediaService: AppMediaService
+    private mediaObserver: MediaObserver
   ) {}
 
   open(args: {
@@ -34,9 +34,9 @@ export class SnackbarService {
   }
 
   get defaultPosition(): MatSnackBarConfig<any> {
-    if (this.mediaService.isHandset)
+    if (this.mediaObserver.isActive('lt-sm'))
       return { horizontalPosition: 'center', verticalPosition: 'bottom' };
-    else if (this.mediaService.isTablet)
+    else if (this.mediaObserver.isActive('lt-md'))
       return { horizontalPosition: 'center', verticalPosition: 'top' };
     else
       return {

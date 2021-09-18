@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   version: '1.0',
+  db: 'questions_and_answers',
+  dbVersion: 1,
 };
 
 /*

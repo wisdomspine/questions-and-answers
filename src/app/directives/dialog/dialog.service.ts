@@ -16,7 +16,7 @@ export class DialogService {
       .open(ConfirmDialogComponent, {
         maxHeight: '80vh',
         maxWidth: '80vw',
-        width: '600px',
+        width: '500px',
         data: options,
       })
       .afterClosed()

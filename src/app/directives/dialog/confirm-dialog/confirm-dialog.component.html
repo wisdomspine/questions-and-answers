@@ -1,61 +1,43 @@
 <mat-card class="app-padding-top-80-important app-padding-bottom-80-important">
   <div class="content">
-    <span
-      class="app-font-size-72-important app-margin-bottom-56-important"
-      *ngIf="data?.fontIcon !== null"
-    >
-      <mat-icon
-        [fontIcon]="data?.fontIcon ?? 'app-info'"
-        [style.height.px]="72"
-        [style.width.px]="72"
-        class="app-margin-left--14-important"
-        [color]="data?.iconTheme ?? color"
-        [style.color]="data?.iconColor ?? undefined"
-        [style.font-size.px]="72"
-      ></mat-icon>
-    </span>
-    <span class="mat-display-2 app-margin-0-important app-text-center"
+    <span class="mat-h1" style="margin: 0px; text-align: center"
       >{{ data?.title }}
     </span>
     <p
-      class="
-        mat-h3
-        app-text-center
-        app-margin-top-24-important
-        app-padding-left-24-important
-        app-padding-right-24-important
+      class="mat-h3"
+      style="
+        text-align: center;
+        margin-top: 24px;
+        margin-left: 24px;
+        margin-right: 24px;
       "
     >
       {{ data?.subtitle }}
     </p>
   </div>
-  <mat-card-footer class="app-margin-top-56-important">
+  <mat-card-footer
+    style="margin-top: 32px"
+    fxLayout="row nowrap"
+    fxLayoutGap="24px"
+  >
     <button
       [color]="color"
       mat-stroked-button
       class="
-        app-border-radius-8-important
-        app-margin-right-12-important
-        app-padding-top-12-important
-        app-padding-bottom-12-important
         app-border-color-{{ color }}-important
       "
+      style="border-radius: 50px; padding-top: 4px; padding-bottom: 4px"
       (click)="dialogRef.close(false)"
     >
-      <span class="mat-h2"> {{ data?.cancelText ?? "Cancel" }} </span>
+      <span> {{ data?.cancelText ?? "Cancel" }} </span>
     </button>
     <button
       [color]="data?.acceptButtonTheme ?? color"
       mat-flat-button
-      class="
-        app-border-radius-8-important
-        app-margin-left-12-important
-        app-padding-top-12-important
-        app-padding-bottom-12-important
-      "
+      style="border-radius: 50px; padding-top: 4px; padding-bottom: 4px"
       (click)="dialogRef.close(true)"
     >
-      <span class="mat-h2"> {{ data?.acceptText ?? "Accept" }} </span>
+      <span> {{ data?.acceptText ?? "Accept" }} </span>
     </button>
   </mat-card-footer>
 </mat-card>
