@@ -213,7 +213,7 @@ export class QuestionSheetComponent implements OnInit, OnDestroy {
         this.sheetId,
         new Question({
           answer: this.form.answer?.value,
-          question: this.form?.answer?.value,
+          question: this.form?.question?.value,
         })
       )
       .subscribe(
@@ -248,7 +248,7 @@ export class QuestionSheetComponent implements OnInit, OnDestroy {
         new Question({
           ...question,
           answer: this.form.answer?.value,
-          question: this.form?.answer?.value,
+          question: this.form?.question?.value,
         })
       )
       .subscribe(
