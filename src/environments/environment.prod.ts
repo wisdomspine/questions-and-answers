@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  version: '1.0',
+  db: 'questions_and_answers',
+  dbVersion: 1,
 };

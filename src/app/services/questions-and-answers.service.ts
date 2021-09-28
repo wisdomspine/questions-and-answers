@@ -386,13 +386,13 @@ export class QuestionsAndAnswersService {
     if (!sheet) return;
     const questions = this.queryQuestions(sheetId) ?? [];
 
-    let text = `${sheet.title}\n\n\n`;
+    let text = ``;
     questions.forEach((question, index) => {
-      text += `Q${index + 1} \n`;
-      text += 'Question\n';
-      text += `${changeCaseTo(question.question ?? '', 'sentence')}\n`;
-      text += 'Answer\n';
-      text += `${changeCaseTo(question.answer ?? '', 'sentence')}\n\n`;
+      text += `${question.question}\n`;
+      (question.answers ?? []).forEach((answer) => {
+        text += `${answer.label?.toUpperCase()}. ${answer.answer}\n`;
+      });
+      text += `ANSWER: ${question.correctAnswer?.label?.toUpperCase()}\n\n`;
     });
 
     FileUtil.downloadTextFile(`${sheet.title}.txt`, text);

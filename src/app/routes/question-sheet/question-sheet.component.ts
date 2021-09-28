@@ -209,13 +209,7 @@ export class QuestionSheetComponent implements OnInit, OnDestroy {
   createQuestion() {
     this.loadingService.start();
     this.questionsService
-      .addQuestion(
-        this.sheetId,
-        new Question({
-          answer: this.form.answer?.value,
-          question: this.form?.question?.value,
-        })
-      )
+      .addQuestion(this.sheetId, this.form.asModel)
       .subscribe(
         (success) => {
           this.snackbar.open({
@@ -247,8 +241,7 @@ export class QuestionSheetComponent implements OnInit, OnDestroy {
         question.id,
         new Question({
           ...question,
-          answer: this.form.answer?.value,
-          question: this.form?.question?.value,
+          ...this.form.asModel,
         })
       )
       .subscribe(

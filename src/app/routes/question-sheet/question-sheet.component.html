@@ -130,11 +130,30 @@
             class="app-text-color-accent-500"
             style="margin: 0px; margin-top: 20px"
           >
-            Answer
+            Options
           </p>
-          <p>
-            {{ question.answer ?? "" | titlecase }}
-          </p>
+          <mat-list role="list">
+            <mat-list-item
+              role="listitem"
+              *ngFor="let answer of question.answers ?? []"
+            >
+              <span style="font-weight: 700"
+                >{{ answer.label | uppercase }}.</span
+              >&nbsp;&nbsp;&nbsp;&nbsp;<span>{{
+                answer?.answer ?? "" | changeCase: "sentence"
+              }}</span>
+            </mat-list-item>
+
+            <mat-list-item role="listitem" *ngIf="question.correctAnswer">
+              <span
+                style="font-weight: 700"
+                class="app-active-text-color-important"
+                >Correct Answer: </span
+              >&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight: 700">{{
+                question.correctAnswer?.label ?? "" | uppercase
+              }}</span>
+            </mat-list-item>
+          </mat-list>
         </mat-card-content>
       </mat-card>
 
@@ -201,23 +220,77 @@
 
             <p
               class="app-text-color-accent-500"
-              style="margin: 0px; margin-top: 20px"
+              style="margin: 0px; margin-top: 20px; margin-bottom: 16px"
             >
-              Answer
+              Options
             </p>
-            <mat-form-field
-              appearance="outline"
-              color="accent"
-              style="width: 100%"
+            <div
+              *ngFor="let option of form.answersControls; let i = index"
+              fxLayout="row nowrap"
+              fxLayoutAlign="space-between flex-start"
+              fxLayoutGap="16px"
+              style="margin-bottom: 8px"
             >
-              <textarea
-                rows="1"
-                placeholder="Type Answer here ...."
-                matInput
-                formControlName="answer"
-              ></textarea>
-            </mat-form-field>
+              <p style="font-weight: 700">
+                {{ option.label.value ?? "" | uppercase }}.
+              </p>
+              <mat-form-field
+                appearance="outline"
+                color="accent"
+                style="width: 100%"
+              >
+                <input
+                  type="text"
+                  placeholder="Type Answer here ...."
+                  matInput
+                  [formControl]="option.answer"
+                />
+                <mat-error
+                  *ngIf="
+                    option.answer.hasError('required') ||
+                    option.answer.hasError('notEmpty')
+                  "
+                >
+                  Answer is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <div fxLayout="row nowrap" fxLayoutAlign="flex-end center">
+                <button
+                  mat-icon-button
+                  type="button"
+                  (click)="form.removeOptionAtIndex(i)"
+                  color="warn"
+                  [disabled]="!form.canRemoveOption"
+                  matTooltip="Delete Option"
+                >
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+
+                <!-- check box -->
+                <mat-checkbox
+                  [checked]="option.isCorrect.value"
+                  (change)="form.setCorrectAnswer(i)"
+                  >Correct
+                </mat-checkbox>
+              </div>
+            </div>
           </mat-card-content>
+          <mat-card-footer
+            fxLayout="row nowrap"
+            fxLayoutAlign="flex-end center"
+          >
+            <button
+              mat-button
+              (click)="form.addOption()"
+              type="button"
+              *ngIf="form.canAddOption"
+            >
+              <span style="font-size: 12px" class="app-text-color-accent-600"
+                >ADD OPTION</span
+              >
+            </button>
+          </mat-card-footer>
         </mat-card>
       </form>
     </ng-container>
@@ -285,23 +358,78 @@
 
           <p
             class="app-text-color-accent-500"
-            style="margin: 0px; margin-top: 20px"
+            style="margin: 0px; margin-top: 20px; margin-bottom: 16px"
           >
-            Answer
+            Options
           </p>
-          <mat-form-field
-            appearance="outline"
-            color="accent"
-            style="width: 100%"
-          >
-            <textarea
-              rows="1"
-              placeholder="Type Answer here ...."
-              matInput
-              formControlName="answer"
-            ></textarea>
-          </mat-form-field>
+          <div formArrayName="answers">
+            <div
+              *ngFor="let option of form.answersControls; let i = index"
+              fxLayout="row nowrap"
+              fxLayoutAlign="space-between flex-start"
+              fxLayoutGap="16px"
+              style="margin-bottom: 8px"
+            >
+              <p style="font-weight: 700">
+                {{ option.label.value ?? "" | uppercase }}.
+              </p>
+              <mat-form-field
+                appearance="outline"
+                color="accent"
+                style="width: 100%"
+              >
+                <input
+                  type="text"
+                  placeholder="Type Answer here ...."
+                  matInput
+                  [formControl]="option.answer"
+                />
+                <mat-error
+                  *ngIf="
+                    option.answer.hasError('required') ||
+                    option.answer.hasError('notEmpty')
+                  "
+                >
+                  Answer is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <div fxLayout="row nowrap" fxLayoutAlign="flex-end center">
+                <button
+                  mat-icon-button
+                  type="button"
+                  (click)="form.removeOptionAtIndex(i)"
+                  color="warn"
+                  [disabled]="!form.canRemoveOption"
+                  matTooltip="Delete Option"
+                >
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+
+                <!-- check box -->
+                <mat-checkbox
+                  [checked]="option.isCorrect.value"
+                  (change)="form.setCorrectAnswer(i)"
+                >
+                  Correct
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
         </mat-card-content>
+
+        <mat-card-footer fxLayout="row nowrap" fxLayoutAlign="flex-end center">
+          <button
+            mat-button
+            (click)="form.addOption()"
+            type="button"
+            *ngIf="form.canAddOption"
+          >
+            <span style="font-size: 12px" class="app-text-color-accent-600"
+              >ADD OPTION</span
+            >
+          </button>
+        </mat-card-footer>
       </mat-card>
     </form>
   </div>

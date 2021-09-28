@@ -25,6 +25,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DialogModule } from './directives/dialog/dialog.module';
 import { FormHelpersModule } from './directives/form-helpers/form-helpers.module';
+import { PipesModule } from './directives/pipes/pipes.module';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,6 +57,8 @@ import { FormHelpersModule } from './directives/form-helpers/form-helpers.module
     MatSnackBarModule,
     DialogModule,
     FormHelpersModule,
+    PipesModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
